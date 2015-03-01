@@ -24,7 +24,7 @@ static bstring DB_load()
 	db = DB_open(DB_FILE, "r");
 	check(db, "Failed to open database: %s", DB_FILE);
 
-	data = bread((dNread)fread, db);
+	data = bread((bNread)fread, db);
 	check(data, "Failed to read from db file: %s", DB_FILE);
 
 	DB_close(db);
@@ -39,7 +39,7 @@ error:
 int DB_update(const char *url)
 {
 	if(DB_find(url)) {
-		log_info("Already recoded as installed: %s", url);
+		log_info("Already recorded as installed: %s", url);
 	}
 
 	FILE *db = DB_open(DB_FILE, "a+");
@@ -82,7 +82,7 @@ int DB_init()
 {
 	apr_pool_t *p = NULL;
 	apr_pool_initialize();
-	apr_pool_create(&p, NULl);
+	apr_pool_create(&p, NULL);
 
 	if(access(DB_DIR, W_OK | X_OK) == -1) {
 		apr_status_t rc = apr_dir_make_recursive(DB_DIR,
